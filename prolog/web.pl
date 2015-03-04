@@ -11,6 +11,7 @@
 :- use_module(library(http/http_open), [http_open/3]). % make HTTP responses
 :- use_module(library(http/http_ssl_plugin), []). % support SSL
 :- use_module(library(http/json), [json_read_dict/3]).  % support JSON
+:- use_module(library(sgml), [load_structure/3]).  % support HTML parsing
 
 :- redefine_system_predicate(get/2).
 
@@ -30,6 +31,18 @@ content_view([View|Views],Response) :-
 content_view(codes(Codes),Response) :-
     response:body(Response,Body),
     read_stream_to_codes(Body,Codes).
+content_view(html5(Dom),Response) :-
+    response:body(Response,Body),
+    load_structure(
+        stream(Body),
+        [Dom|_],
+        [
+            dialect(html5),
+            shorttag(false),
+            max_errors(-1),
+            syntax_errors(quiet)
+        ]
+    ).
 content_view(json(Dict),Response) :-
     response:content_type(Response,'application/json'),
     response:body(Response,Body),

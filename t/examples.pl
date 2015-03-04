@@ -1,4 +1,5 @@
 :- use_module(library(web), []).
+:- use_module(library(xpath)).
 
 http('http://www.ndrix.com/hello.txt').
 https('https://storage.googleapis.com/www.ndrix.com/hello.txt').
@@ -27,3 +28,7 @@ json :-
     web:get(Url,[codes(Codes),status_code(Code)]),
     Code == 200,
     Codes == `Hello from the Internet`.
+
+html5 :-
+    web:get('https://www.google.com',html5(Dom)),
+    once(xpath(Dom,//title(content),['Google'])).
