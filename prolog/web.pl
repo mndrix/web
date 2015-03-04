@@ -53,6 +53,18 @@ content_view(status_code(Code),Response) :-
 %% get(+Url, -Response) is det.
 %
 %  True if an HTTP GET request to Url produces a Response.
+%  Url can be an atom, string or list of codes.  If Response is
+%  an unbound variable, it's unified with a value representing
+%  the full HTTP response.  See library(response) in this pack
+%  for predicates about this value.
+%
+%  Response may also be one of the following:
+%
+%    * `codes(Codes)` - returns response body as a list of codes
+%    * `status_code(Code)` - unifies Code with the HTTP status code
+%    * `html5(Dom)` - parses response body as HTML using load_structure/3
+%    * `json(Dict)` - parses response body as JSON
+%    * `[...]` - a list of the above; only one may parse the response body
 get(UrlText,View) :-
     must_be(ground,UrlText),
     text_atom(UrlText,Url),

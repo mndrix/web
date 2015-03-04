@@ -19,8 +19,7 @@ This module helps you perform HTTP operations with as little code as possible.  
   * helpful SSL defaults
   * convert HTTP responses from common data formats
     * JSON
-    * `application/x-www-form-urlencoded`
-    * &hellip;
+    * HTML5
 
 For more complex needs, use [http_open](http://www.swi-prolog.org/pldoc/man?section=httpopen) or [http_client](http://www.swi-prolog.org/pldoc/man?section=httpclient) directly.
 
