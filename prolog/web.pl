@@ -7,8 +7,8 @@
 
 % core libraries
 :- use_module(library(error), [must_be/2]).
-:- use_module(library(http/http_open), [http_open/3]). % make HTTP responses
 :- use_module(library(http/http_header), []). % support POST, PUT, etc. methods
+:- use_module(library(http/http_open), [http_open/3]). % make HTTP responses
 :- use_module(library(http/http_ssl_plugin), []). % support SSL
 :- use_module(library(http/json), [json_read_dict/3]).  % support JSON
 
