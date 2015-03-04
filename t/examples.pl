@@ -20,4 +20,4 @@ json :-
     web:get('http://httpbin.org/ip', json(Dict)),
     nonvar(Dict),
     Dict = _{origin: Ip},
-    atom(Ip).
+    string(Ip).

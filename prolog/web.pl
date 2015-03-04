@@ -10,6 +10,7 @@
 :- use_module(library(http/http_open), [http_open/3]). % make HTTP responses
 :- use_module(library(http/http_header), []). % support POST, PUT, etc. methods
 :- use_module(library(http/http_ssl_plugin), []). % support SSL
+:- use_module(library(http/json), [json_read_dict/3]).  % support JSON
 
 :- redefine_system_predicate(get/2).
 
@@ -25,6 +26,10 @@ cacert_file(File) :-
 content_view(codes(Codes),Response) :-
     response:body(Response,Body),
     read_stream_to_codes(Body,Codes).
+content_view(json(Dict),Response) :-
+    response:content_type(Response,'application/json'),
+    response:body(Response,Body),
+    json_read_dict(Body,Dict,[tag('')]).
 
 %% get(+Url, -Response) is det.
 %
