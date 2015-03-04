@@ -21,8 +21,8 @@ cacert_file(File) :-
     compile_predicates([cacert_file/1]).
 
 % let third parties define views on HTTP content
-:- multifile content_view/3.
-content_view(codes(Codes),_,Response) :-
+:- multifile content_view/2.
+content_view(codes(Codes),Response) :-
     response:body(Response,Body),
     read_stream_to_codes(Body,Codes).
 
@@ -33,8 +33,7 @@ get(UrlText,View) :-
     must_be(ground,UrlText),
     text_atom(UrlText,Url),
     get_(Url,Response),
-    response:content_type(Response,ContentType),
-    ( var(View) -> View=Response; content_view(View,ContentType,Response) ).
+    ( var(View) -> View=Response; content_view(View,Response) ).
 
 get_(Url,Response) :-
     % make request
