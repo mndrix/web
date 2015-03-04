@@ -9,7 +9,7 @@ https('https://storage.googleapis.com/www.ndrix.com/hello.txt').
 http :-
     http(Url),
     web:get(Url,codes(Codes)),
-    Codes == `content living in the cloud`.
+    Codes == `Hello from the Internet`.
 
 https :-
     https(Url),
