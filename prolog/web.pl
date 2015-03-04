@@ -23,6 +23,10 @@ cacert_file(File) :-
 
 % let third parties define views on HTTP content
 :- multifile content_view/2.
+content_view([],_).
+content_view([View|Views],Response) :-
+    content_view(View,Response),
+    content_view(Views,Response).
 content_view(codes(Codes),Response) :-
     response:body(Response,Body),
     read_stream_to_codes(Body,Codes).
@@ -30,6 +34,8 @@ content_view(json(Dict),Response) :-
     response:content_type(Response,'application/json'),
     response:body(Response,Body),
     json_read_dict(Body,Dict,[tag('')]).
+content_view(status_code(Code),Response) :-
+    response:status_code(Response,Code).
 
 %% get(+Url, -Response) is det.
 %

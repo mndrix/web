@@ -21,3 +21,9 @@ json :-
     nonvar(Dict),
     Dict = _{origin: Ip},
     string(Ip).
+
+'multiple views' :-
+    http(Url),
+    web:get(Url,[codes(Codes),status_code(Code)]),
+    Code == 200,
+    Codes == `Hello from the Internet`.
