@@ -14,7 +14,7 @@ http :-
 https :-
     https(Url),
     web:get(Url, codes(Codes)),
-    Codes == `content living in the cloud`.
+    Codes == `Hello from the Internet`.
 
 json :-
     web:get('http://httpbin.org/ip', json(Dict)),

@@ -13,6 +13,13 @@
 
 :- redefine_system_predicate(get/2).
 
+:- dynamic cacert_file/1.
+cacert_file(File) :-
+    absolute_file_name(library('../cacert-web.pem'), File, [access(read)]),
+    retractall(cacert_file(_)),
+    assert(cacert_file(File)),
+    compile_predicates([cacert_file/1]).
+
 % let third parties define views on HTTP content
 :- multifile content_view/3.
 content_view(codes(Codes),_,Response) :-
@@ -31,10 +38,12 @@ get(UrlText,View) :-
 
 get_(Url,Response) :-
     % make request
+    cacert_file(CacertFile),
     Options = [
         method(get),
         header(content_type,ContentType),
-        status_code(StatusCode)
+        status_code(StatusCode),
+        cacert_file(CacertFile)
     ],
     http_open(Url,Body,Options),
 
